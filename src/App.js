@@ -42,13 +42,22 @@ class App extends Component {
 
     fetchData = async (keyword) => {
         const search = this.isEmpty(keyword) ? '' : '&filter=like(name,*' + keyword +'*)'
-        const resp = await request.get('/products?page[offset]=0&page[limit]=10' + search)
+        const include = '&include=main_image'
+        const resp = await request.get('/products?page[offset]=0&page[limit]=10' + include + search)
         const products = resp.data.data.map(item => {
+            let image = 'https://via.placeholder.com/400x400.png'
+            if (item.relationships.main_image) {
+                const fileId = item.relationships.main_image.data.id
+                const file = resp.data.included.main_images.find(function(el) {
+                  return fileId === el.id;
+                });
+                image = file.link.href
+            }
             return {
                 id: item.id,
                 name: item.name,
                 description: item.description,
-                image: 'https://via.placeholder.com/300x400.png',
+                image: image,
                 price: item.meta.display_price.with_tax.formatted,
             }
         })
