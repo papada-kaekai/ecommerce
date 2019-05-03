@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Box, Heading } from 'grommet'
+import ShoppingCartButton from './ShoppingCartButton';
 
 class AppBar extends Component
 {
@@ -27,6 +28,9 @@ class AppBar extends Component
                 >
                     Modern Store
                 </Heading>
+                <Box>
+                    <ShoppingCartButton />
+                </Box>
             </Box>
         )
     }

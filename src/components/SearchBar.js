@@ -1,4 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
+import { 
+    handleInputChange 
+} from '../utils/common';
+
 import { 
     Box, 
     FormField, 
@@ -8,9 +14,15 @@ import {
 
 class SearchBar extends Component
 {
-    
     render() {  
-        const { keyword, hangleInputChange, onSearch } = this.props
+        const { 
+            keyword, 
+        } = this.props.product
+        const { 
+            setValue, 
+            getList,
+        } = this.props.productAction
+
         return (
             <Box
                 direction='column'
@@ -21,16 +33,26 @@ class SearchBar extends Component
                     <TextInput 
                         name='keyword'
                         placeholder='Search'
-                        onChange={(event) => hangleInputChange(event)}
+                        onChange={(event) => handleInputChange(event, setValue)}
                     />
                 </FormField>
                 <Button
                     label='Search'
-                    onClick={() => onSearch(keyword)}
+                    onClick={() => getList(keyword)}
                 />
             </Box>
         )
     }
 }
 
-export default SearchBar
+const mapStateToProps = state => {
+    return {
+        product: state.product
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        productAction: dispatch.product
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar)

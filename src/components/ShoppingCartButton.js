@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { DropButton, Box, Stack } from 'grommet';
 import { Shop } from 'grommet-icons'
+import { connect } from 'react-redux';
 
-export default class ShoppingCartButton extends Component {
+class ShoppingCartButton extends Component {
     render() {
         return (
         <DropButton
@@ -32,3 +33,11 @@ export default class ShoppingCartButton extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+    //   cartLength: state.cart.cartItems.length
+    }
+}
+
+export default connect(mapStateToProps)(ShoppingCartButton)

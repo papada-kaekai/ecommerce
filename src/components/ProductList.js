@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import { 
     Box
 } from 'grommet'
@@ -7,9 +9,18 @@ import ProductItem from './ProductItem'
 
 class ProductList extends Component
 {
+
+    componentDidMount() {
+        const { 
+            getProducts 
+        } = this.props
+        getProducts()
+    }
     
     render() {
-        const { products } = this.props
+        const { 
+            products 
+        } = this.props.product
         return (
             <Box
                 direction='column'
@@ -28,11 +39,11 @@ class ProductList extends Component
                 >
                     {
                         products && products.length > 0 &&
-                        products.map((product) => (
-                            <ProductItem 
-                                {...product}
-                            />
-                        ))
+                            products.map((product) => (
+                                <ProductItem 
+                                    {...product}
+                                />
+                            ))
                     }
                 </Box>
             </Box>
@@ -40,4 +51,14 @@ class ProductList extends Component
     }
 }
 
-export default ProductList
+const mapStateToProps = state => {
+    return {
+        product: state.product
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        getProducts: dispatch.product.getList
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList)

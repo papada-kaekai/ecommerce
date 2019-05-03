@@ -13,9 +13,7 @@ export default class ProductItem extends Component
 {
 
     handleAddToCart = () => {
-        const {addItem, id} = this.props
-
-        addItem(id)
+        console.log('handleAddToCart')
     }
     
     render() {  
