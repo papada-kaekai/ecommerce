@@ -6,16 +6,14 @@ import { Box } from 'grommet'
 class CartItemList extends Component {
 
     render() {
-        const {
-            items,
-        } = this.props.cart
+        const { itemsCart } = this.props.cart
 
         return (
             <Box 
                 pad="small"
             >
                 {
-                    items.map(item => (
+                    itemsCart.map(item => (
                         <Box 
                             pad="small"
                         >

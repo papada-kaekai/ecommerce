@@ -2,19 +2,26 @@ import request from '../../utils/request'
 
 export const cart = {
     state: {
-        items: [],
+        itemsCart: [],
         cartID: 1234,
+        totalPrice: 0,
     },
     reducers: {
         setCartValue(state, payload, name) {
             return {
-              ...state,
-              [name]: payload
+                ...state,
+                [name]: payload
+            }
+        },
+        setTotalPrice(state, payload) {
+            return {
+                ...state,
+                totalPrice: payload
             }
         },
     },
     effects: (dispatch) => ({
-        async getItems(payload, rootState) {
+        async getItemsCart(payload, rootState) {
             const resp = await request.get(`/carts/${payload.cartID}/items`)
             const items = resp.data.data.map(item => { 
                 return {
@@ -25,9 +32,9 @@ export const cart = {
                     price: item.meta.display_price.with_tax.formatted,
                 }
             })
-            dispatch.cart.setCartValue(items, 'items')
+            dispatch.cart.setCartValue(items, 'itemsCart')
         },
-        async addItem(payload, rootState) {
+        async addItemCart(payload, rootState) {
             let data = {}
             data['data'] = {
                 type: 'cart_item',
@@ -48,9 +55,9 @@ export const cart = {
                     price: item.meta.display_price.with_tax.formatted,
                 }
             })
-            dispatch.cart.setCartValue(items, 'items')
+            dispatch.cart.setCartValue(items, 'itemsCart')
         },
-        async updateItem(payload, rootState) {
+        async updateItemCart(payload, rootState) {
             let data = {}
             data['data'] = {
                 type: 'cart_item',
@@ -71,7 +78,7 @@ export const cart = {
                     price: item.meta.display_price.with_tax.formatted,
                 }
             })
-            dispatch.cart.setCartValue(items, 'items')
+            dispatch.cart.setCartValue(items, 'itemsCart')
         },
     })
 }

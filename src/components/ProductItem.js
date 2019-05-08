@@ -15,18 +15,18 @@ class ProductItem extends Component
 {
 
     handleAddToCart = (productID, cartID) => {
-        const { items } = this.props.cart
-        const { getItems, addItem, updateItem } = this.props.cartAction
-        getItems({cartID})
+        const { itemsCart } = this.props.cart
+        const { getItemsCart, addItemCart, updateItemCart } = this.props.cartAction
+        getItemsCart({cartID})
 
-        const item = items.find(o => o.productID === productID)
+        const item = itemsCart.find(o => o.productID === productID)
         if(!item) {
             const payload = {
                 cartID,
                 productID,
                 quantity: 1,
             }
-            addItem(payload)
+            addItemCart(payload)
         } else {
             const payload = {
                 cartID,
@@ -34,7 +34,7 @@ class ProductItem extends Component
                 quantity: 1,
                 item: item,
             }
-            updateItem(payload)
+            updateItemCart(payload)
         }
     }
     

@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { DropButton, Box, Stack } from 'grommet'
+import { 
+    DropButton, 
+    Box, 
+    Stack, 
+    Button 
+} from 'grommet'
 import { Shop } from 'grommet-icons'
 
 import CartItemList from './CartItemList'
@@ -9,20 +15,14 @@ import CartItemList from './CartItemList'
 class ShoppingCartButton extends Component {
 
     componentDidMount() {
-        const {
-            cartID,
-        } = this.props.cart
-        const {
-            getItems,
-        } = this.props.cartAction
+        const { cartID } = this.props.cart
+        const { getItemsCart } = this.props.cartAction
 
-        getItems({cartID})
+        getItemsCart({cartID})
     }
 
     render() {
-        const {
-            items,
-        } = this.props.cart
+        const { itemsCart } = this.props.cart
 
         return (
             <DropButton
@@ -33,21 +33,24 @@ class ShoppingCartButton extends Component {
                 dropContent={
                     <Box>
                         <CartItemList />
+                        <Link to='/checkout'>
+                            <Button primary alignSelf='center'>Checkout</Button>
+                        </Link>
                     </Box>
                 }
             >
                 <Stack
-                    anchor="top-right"
+                    anchor='top-right'
                 >
                     <Box pad='xsmall'>
-                        <Shop size="32px"/>
+                        <Shop size='32px'/>
                     </Box>
                     <Box
-                        background="accent-1"
+                        background='accent-1'
                         pad={{horizontal: 'xsmall'}}
                         round
                     >
-                        {items.length}
+                        {itemsCart.length}
                     </Box>
                 </Stack>
             </DropButton>

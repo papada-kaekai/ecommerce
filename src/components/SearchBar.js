@@ -15,9 +15,7 @@ import {
 class SearchBar extends Component
 {
     render() {  
-        const { 
-            keyword, 
-        } = this.props.product
+        const { keyword } = this.props.product
         
         const { 
             setProductValue, 
