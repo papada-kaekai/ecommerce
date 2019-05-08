@@ -9,7 +9,7 @@ export const product = {
         keyword: '',
     },
     reducers: {
-        setValue(state, payload, name) {
+        setProductValue(state, payload, name) {
             return {
               ...state,
               [name]: payload
@@ -17,8 +17,8 @@ export const product = {
         },
     },
     effects: (dispatch) => ({
-        async getList(keyword) {
-            const search = isEmptyString(keyword) ? '' : `&filter=like(name,*${keyword}*)`
+        async getProducts(payload, rootState) {
+            const search = isEmptyString(payload.keyword) ? '' : `&filter=like(name,*${payload.keyword}*)`
             const include = '&include=main_image'
             const resp = await request.get(`/products?page[offset]=0&page[limit]=10${include}${search}`)
             const products = resp.data.data.map(item => { 
@@ -38,7 +38,7 @@ export const product = {
                     price: item.meta.display_price.with_tax.formatted,
                 }
             })
-            dispatch.product.setValue(products, 'products')
+            dispatch.product.setProductValue(products, 'products')
         },
     })
 }

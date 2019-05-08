@@ -13,14 +13,16 @@ class ProductList extends Component
     componentDidMount() {
         const { 
             getProducts 
-        } = this.props
-        getProducts()
+        } = this.props.productAction
+        
+        getProducts({})
     }
     
     render() {
         const { 
             products 
         } = this.props.product
+        
         return (
             <Box
                 direction='column'
@@ -58,7 +60,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        getProducts: dispatch.product.getList
+        productAction: dispatch.product
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList)
