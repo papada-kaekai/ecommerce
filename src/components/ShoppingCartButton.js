@@ -1,43 +1,68 @@
 import React, { Component } from 'react'
-import { DropButton, Box, Stack } from 'grommet';
+import { connect } from 'react-redux'
+
+import { DropButton, Box, Stack } from 'grommet'
 import { Shop } from 'grommet-icons'
-import { connect } from 'react-redux';
+
+import CartItemList from './CartItemList'
 
 class ShoppingCartButton extends Component {
+
+    componentDidMount() {
+        const {
+            cartID,
+        } = this.props.cart
+        const {
+            getItems,
+        } = this.props.cartAction
+
+        getItems({cartID})
+    }
+
     render() {
+        const {
+            items,
+        } = this.props.cart
+
         return (
-        <DropButton
-            dropAlign={{
-                top: 'bottom',
-                right: 'right'
-            }}
-            dropContent={
-                <Box>Cart product list</Box>
-            }
-        >
-            <Stack
-                anchor="top-right"
+            <DropButton
+                dropAlign={{
+                    top: 'bottom',
+                    right: 'right'
+                }}
+                dropContent={
+                    <Box>
+                        <CartItemList />
+                    </Box>
+                }
             >
-                <Box pad='xsmall'>
-                    <Shop size="32px"/>
-                </Box>
-                <Box
-                    background="accent-1"
-                    pad={{horizontal: 'xsmall'}}
-                    round
+                <Stack
+                    anchor="top-right"
                 >
-                    {0}
-                </Box>
-            </Stack>
-        </DropButton>
+                    <Box pad='xsmall'>
+                        <Shop size="32px"/>
+                    </Box>
+                    <Box
+                        background="accent-1"
+                        pad={{horizontal: 'xsmall'}}
+                        round
+                    >
+                        {items.length}
+                    </Box>
+                </Stack>
+            </DropButton>
         )
     }
 }
 
 const mapStateToProps = state => {
     return {
-    //   cartLength: state.cart.cartItems.length
+        cart: state.cart,
     }
 }
-
-export default connect(mapStateToProps)(ShoppingCartButton)
+const mapDispatchToProps = dispatch => {
+    return {
+        cartAction: dispatch.cart
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartButton)

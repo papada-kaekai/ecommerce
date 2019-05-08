@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import { 
     Box, 
     Image, 
@@ -9,15 +11,46 @@ import {
 } from 'grommet'
 import { Shop } from 'grommet-icons'
 
-export default class ProductItem extends Component
+class ProductItem extends Component
 {
 
-    handleAddToCart = () => {
-        console.log('handleAddToCart')
+    handleAddToCart = (productID, cartID) => {
+        const { items } = this.props.cart
+        const { getItems, addItem, updateItem } = this.props.cartAction
+        getItems({cartID})
+
+        const item = items.find(o => o.productID === productID)
+        if(!item) {
+            const payload = {
+                cartID,
+                productID,
+                quantity: 1,
+            }
+            addItem(payload)
+        } else {
+            const payload = {
+                cartID,
+                productID,
+                quantity: 1,
+                item: item,
+            }
+            updateItem(payload)
+        }
     }
     
     render() {  
-        const { name, description, image, price } = this.props
+        const { 
+            id, 
+            name, 
+            description, 
+            image, 
+            price
+        } = this.props
+
+        const { 
+            cartID, 
+        } = this.props.cart
+
         return (
             <Box
                 direction='column'
@@ -60,9 +93,21 @@ export default class ProductItem extends Component
                     >
                         {description}
                     </Text>
-                    <Button primary pad="small" margin="small" icon={<Shop />} label="Add to cart" onClick={this.handleAddToCart}/>
+                    <Button primary pad="small" margin="small" icon={<Shop />} label="Add to cart" onClick={() => this.handleAddToCart(id, cartID)}/>
                 </Box>
             </Box>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        cart: state.cart
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        cartAction: dispatch.cart
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProductItem)

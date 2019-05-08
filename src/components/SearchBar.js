@@ -18,9 +18,10 @@ class SearchBar extends Component
         const { 
             keyword, 
         } = this.props.product
+        
         const { 
-            setValue, 
-            getList,
+            setProductValue, 
+            getProducts,
         } = this.props.productAction
 
         return (
@@ -33,12 +34,12 @@ class SearchBar extends Component
                     <TextInput 
                         name='keyword'
                         placeholder='Search'
-                        onChange={(event) => handleInputChange(event, setValue)}
+                        onChange={(event) => handleInputChange(event, setProductValue)}
                     />
                 </FormField>
                 <Button
                     label='Search'
-                    onClick={() => getList(keyword)}
+                    onClick={() => getProducts({keyword})}
                 />
             </Box>
         )

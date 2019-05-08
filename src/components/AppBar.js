@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+
 import { Box, Heading } from 'grommet'
-import ShoppingCartButton from './ShoppingCartButton';
+
+import ShoppingCartButton from './ShoppingCartButton'
 
 class AppBar extends Component
 {
