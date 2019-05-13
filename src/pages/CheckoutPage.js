@@ -4,25 +4,37 @@ import { connect } from 'react-redux'
 import { 
   Box 
 } from 'grommet'
+import CheckoutForm from '../components/CheckoutForm';
 
 class CheckoutPage extends Component {
-  render() {
-    const { items } = this.props.cart
-    console.log(items)
-    return (
-      <Box 
-        direction='row'
-        pad='small'
-      >
-        <Box width='medium'>
-          cart items
-        </Box>
-        <Box flex>
-          form
-        </Box>
-      </Box>
-    )
-  }
+
+    state = {
+      
+    }
+
+    onSubmit = (values) => {
+        console.log(values)
+    }
+
+    render() {
+        const { items } = this.props.cart
+        return (
+            <Box 
+                direction='row'
+                pad='small'
+            >
+               <Box width='medium'>
+                    cart items
+                </Box>
+                <Box flex>
+                    <CheckoutForm onSubmit={(values) => this.onSubmit(values)} />
+                </Box>
+              { 
+                  
+              }
+            </Box>
+        )
+    }
 }
 
 const mapStateToProps = state => {
